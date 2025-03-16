@@ -1,10 +1,5 @@
-import React, { useContext, useState } from "react";
+import { useContext } from "react";
 import { Container, Coordinate, Selected } from "./SudokuContainer";
-
-interface ID {
-  row: number;
-  index: number;
-}
 
 function DisplayBox({
   answer,
@@ -15,7 +10,7 @@ function DisplayBox({
   row: number;
   col: number;
 }) {
-  const { container, setContainer } = useContext(Container);
+  const { container } = useContext(Container);
   const { selected, setSelected } = useContext(Selected);
   const box = container.get(row)?.get(col);
 

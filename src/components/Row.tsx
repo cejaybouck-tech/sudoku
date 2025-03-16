@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import DisplayBox from "./DisplayBox";
-import { Box, Container } from "./SudokuContainer";
+import { Container } from "./SudokuContainer";
 
 function Row({ rowId }: { rowId: number }) {
-  const { container, setContainer } = useContext(Container);
+  const { container } = useContext(Container);
   const row = !container.get(rowId) ? new Map() : container.get(rowId);
   const emptyArray = new Array(9);
 
@@ -12,7 +12,7 @@ function Row({ rowId }: { rowId: number }) {
       {[...emptyArray].map((slot, index) => {
         return (
           <DisplayBox
-            key={"key-" + index + rowId}
+            key={"key-" + index + rowId + slot}
             answer={row?.get(index).answer}
             row={rowId}
             col={index}

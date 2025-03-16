@@ -64,8 +64,6 @@ function isAllAnswersFilled(container: Map<number, Map<number, Box>>) {
 }
 
 function buildRow(row: number, container: Map<number, Map<number, Box>>) {
-  let col = 0;
-
   for (let i = 0; i < 9; i++) {
     const answer = findSmallestOptions(row, container);
 
