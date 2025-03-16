@@ -19,8 +19,7 @@ function AnswerSelector() {
   };
 
   const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!selected.row) return;
-
+    if (!selected.answer) return;
     const answer = Number(e.currentTarget.innerHTML);
 
     if (isTakingNote) {
@@ -39,8 +38,10 @@ function AnswerSelector() {
     };
 
     const box = container.get(selected.row)?.get(selected.col);
+    if (box?.visible) return;
 
-    if (box?.visible || !isAvailable(answer, setCoordinate, container)) {
+    if (!isAvailable(answer, setCoordinate, container)) {
+      //set up mistake system
       return;
     }
 
@@ -60,7 +61,6 @@ function AnswerSelector() {
     if (box?.visible) return;
 
     setContainer(buildWithNote(answer, setCoordinate, container));
-    //setSelected((prev) => ({ ...prev, answer: answer }));
   };
 
   const box = container.get(selected.row)?.get(selected.col);
