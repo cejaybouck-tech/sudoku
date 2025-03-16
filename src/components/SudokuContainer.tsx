@@ -59,7 +59,7 @@ function SudokuContainer() {
       <Container.Provider value={{ container, setContainer }}>
         <Selected.Provider value={{ selected, setSelected }}>
           {emptyRows.map((value, index) => (
-            <Row key={"rowkey-" + index} rowId={index} />
+            <Row key={"rowkey-" + index + value} rowId={index} />
           ))}
           <AnswerSelector />
         </Selected.Provider>

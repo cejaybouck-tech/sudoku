@@ -1,4 +1,4 @@
-import React, { useContext, useState, MouseEvent } from "react";
+import { useContext, useState, MouseEvent } from "react";
 import { Container, Selected } from "./SudokuContainer";
 import { isAvailable } from "../util/CheckNumber";
 import { buildWithAnswer } from "../util/SetAnswer";
