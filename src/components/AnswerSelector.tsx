@@ -19,7 +19,7 @@ function AnswerSelector() {
   };
 
   const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!selected.answer) return;
+    if (!selected.answer && selected.row < 0 && selected.col < 0) return;
     const answer = Number(e.currentTarget.innerHTML);
 
     if (isTakingNote) {

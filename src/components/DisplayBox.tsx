@@ -16,10 +16,12 @@ function DisplayBox({
 
   const onSelect = () => {
     if (row === selected.row && col === selected.col) {
-      setSelected({} as Coordinate);
+      setSelected({ row: -1, col: -1, answer: undefined } as Coordinate);
       return;
     }
-    setSelected({ row, col, answer });
+    const visible = container.get(row)?.get(col)?.visible;
+    const newAnswer = visible ? answer : 0;
+    setSelected({ row, col, answer: newAnswer });
   };
 
   return (
