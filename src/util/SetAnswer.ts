@@ -22,15 +22,10 @@ export function buildWithNote(
 ) {
   const newContainer = new Map(container);
   const box = newContainer.get(coordinate.row)?.get(coordinate.col);
-  console.log("rebuilding note:", note);
-  console.log("notes:", box?.notes.includes(note));
-  console.log("box:", box);
   if (box?.notes.includes(note)) {
-    console.log("removing note");
     const newNotes: Array<number> = box?.notes.filter(
       (noteCheck) => noteCheck !== note
     ) as Array<number>;
-    console.log(newNotes);
     newContainer.get(coordinate.row)?.set(coordinate.col, {
       answer: undefined,
       visible: false,
@@ -39,7 +34,6 @@ export function buildWithNote(
     return newContainer;
   }
 
-  console.log("adding note");
   box?.notes.push(note);
   return newContainer;
 }
