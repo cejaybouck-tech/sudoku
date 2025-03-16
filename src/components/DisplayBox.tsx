@@ -31,11 +31,16 @@ function DisplayBox({
         ${col === 0 ? "border-l" : ""} 
         ${row === 0 ? "border-t" : ""}`}
     >
-      {answer && box?.visible ? (
+      {(answer && box?.visible) ||
+      (selected.col === col && selected.row === row) ? (
         <p
-          className={`w-full h-full flex justify-center items-center ${
-            selected.row === row && selected.col === col ? " bg-green-400" : ""
-          }`}
+          className={`w-full h-full flex justify-center items-center
+            ${selected.answer === answer ? "bg-green-200" : ""}
+            ${
+              selected.row === row && selected.col === col
+                ? " bg-green-400"
+                : ""
+            }`}
         >
           {answer}
         </p>
