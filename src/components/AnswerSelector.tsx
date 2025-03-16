@@ -1,7 +1,7 @@
 import { useContext, useState, MouseEvent } from "react";
 import { Container, Selected } from "./SudokuContainer";
 import { isAvailable } from "../util/CheckNumber";
-import { buildWithAnswer } from "../util/SetAnswer";
+import { buildWithAnswer, buildWithNote } from "../util/SetAnswer";
 
 function AnswerSelector() {
   const [isTakingNote, setIsTakingNote] = useState<boolean>(false);
@@ -19,22 +19,51 @@ function AnswerSelector() {
   };
 
   const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    if (selected.row < 0 || selected.answer) return;
+    if (!selected.row) return;
 
     const answer = Number(e.currentTarget.innerHTML);
+
+    if (isTakingNote) {
+      setNote(answer);
+      return;
+    }
+
+    setAnswer(answer);
+  };
+
+  const setAnswer = (answer: number) => {
     const setCoordinate = {
       row: selected.row,
       col: selected.col,
       answer: selected.answer,
     };
 
-    if (!isAvailable(answer, setCoordinate, container)) {
+    const box = container.get(selected.row)?.get(selected.col);
+
+    if (box?.visible || !isAvailable(answer, setCoordinate, container)) {
       return;
     }
 
     setContainer(buildWithAnswer(answer, setCoordinate, container));
     setSelected((prev) => ({ ...prev, answer: answer }));
   };
+
+  const setNote = (answer: number) => {
+    const setCoordinate = {
+      row: selected.row,
+      col: selected.col,
+      answer: selected.answer,
+    };
+
+    const box = container.get(selected.row)?.get(selected.col);
+
+    if (box?.visible) return;
+
+    setContainer(buildWithNote(answer, setCoordinate, container));
+    //setSelected((prev) => ({ ...prev, answer: answer }));
+  };
+
+  const box = container.get(selected.row)?.get(selected.col);
 
   return (
     <section className="">
@@ -62,8 +91,9 @@ function AnswerSelector() {
             key={"answer-" + number}
             onClick={handleSelect}
             className={`w-[50px] h-[50px] border  mt-2 mr-1 flex justify-center items-center transition duration-300 hover:-translate-y-2 ${
-              isTakingNote ? "italic font-light" : ""
-            }`}
+              box?.notes.includes(number) ? "border-green-400" : ""
+            }
+              ${isTakingNote ? "italic font-light" : ""}`}
           >
             {number}
           </button>
