@@ -36,7 +36,7 @@ function DisplayBox({
         ${col === 0 ? "border-l" : ""} 
         ${row === 0 ? "border-t" : ""}`}
     >
-      {answer ? (
+      {answer && box?.visible ? (
         <p
           className={`w-full h-full flex justify-center items-center ${
             selected.row === row && selected.col === col ? " bg-green-400" : ""
