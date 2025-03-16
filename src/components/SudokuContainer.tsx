@@ -47,9 +47,16 @@ function SudokuContainer() {
     answer: undefined,
   } as Coordinate);
 
-  const scrambleContainer = (e: React.MouseEvent) => {
+  const difficultyClickHandler = (e: React.MouseEvent) => {
+    const difficultyOptions = new Map([
+      ["easy", { totalHidden: 40, missingNumbers: 0 } as Difficulty],
+      ["medium", { totalHidden: 30, missingNumbers: 0 }],
+      ["hard", { totalHidden: 25, missingNumbers: 1 }],
+      ["expert", { totalHidden: 25, missingNumbers: 2 }],
+    ]);
     e.preventDefault();
-    setContainer(buildSudokuContainer());
+    const difficulty = e.currentTarget.innerHTML.toLowerCase();
+    setContainer(buildSudokuContainer(difficultyOptions.get(difficulty)));
     setSelected({} as Coordinate);
   };
 
@@ -65,10 +72,10 @@ function SudokuContainer() {
         </Selected.Provider>
       </Container.Provider>
       <button
-        onClick={scrambleContainer}
+        onClick={difficultyClickHandler}
         className="mt-4 border rounded-lg p-2 hover:bg-gray-300"
       >
-        Scramble
+        Easy
       </button>
     </section>
   );
