@@ -3,12 +3,12 @@ import { isInCol, isInRow, isInSection } from "./CheckNumber";
 import { setAnswer } from "./SetAnswer";
 
 export interface Difficulty {
-  numbers: number;
+  totalHidden: number;
   missingNumbers: number;
 }
 
 export default function buildSudokuContainer(
-  difficulty: Difficulty = { numbers: 50, missingNumbers: 0 }
+  difficulty: Difficulty = { totalHidden: 50, missingNumbers: 0 }
 ) {
   let container = new Map();
 
@@ -20,7 +20,36 @@ export default function buildSudokuContainer(
     }
   }
 
+  setDifficulty(container, difficulty);
+
   return container;
+}
+
+function setDifficulty(
+  container: Map<number, Map<number, Box>>,
+  difficulty: Difficulty
+) {
+  let numbersLeft = difficulty.totalHidden;
+  console.log("setting difficulty: ", difficulty);
+  //removeMissingNumbers();
+  while (numbersLeft >= 0) {
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        const box = container.get(row)?.get(col);
+        if (!box?.visible) continue;
+
+        const random = Math.floor(Math.random() * 10) > 6; //30% success rate
+        if (random) {
+          container
+            .get(row)
+            ?.set(col, { answer: box.answer, visible: false, notes: [] });
+          --numbersLeft;
+          if (numbersLeft < 0) return;
+        }
+      }
+    }
+    console.log("options left:", numbersLeft);
+  }
 }
 
 function isAllAnswersFilled(container: Map<number, Map<number, Box>>) {
