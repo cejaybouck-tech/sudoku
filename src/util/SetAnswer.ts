@@ -15,6 +15,35 @@ export function buildWithAnswer(
   return newContainer;
 }
 
+export function buildWithNote(
+  note: number,
+  coordinate: Coordinate,
+  container: Map<number, Map<number, Box>>
+) {
+  const newContainer = new Map(container);
+  const box = newContainer.get(coordinate.row)?.get(coordinate.col);
+  console.log("rebuilding note:", note);
+  console.log("notes:", box?.notes.includes(note));
+  console.log("box:", box);
+  if (box?.notes.includes(note)) {
+    console.log("removing note");
+    const newNotes: Array<number> = box?.notes.filter(
+      (noteCheck) => noteCheck !== note
+    ) as Array<number>;
+    console.log(newNotes);
+    newContainer.get(coordinate.row)?.set(coordinate.col, {
+      answer: undefined,
+      visible: false,
+      notes: newNotes,
+    });
+    return newContainer;
+  }
+
+  console.log("adding note");
+  box?.notes.push(note);
+  return newContainer;
+}
+
 export function setAnswer(
   answer: number,
   coordinate: Coordinate,
@@ -85,7 +114,7 @@ function removeNote(box: Box, answer: number) {
 
   const newBox = {
     answer: box.answer,
-    visible: true,
+    visible: box.visible,
     notes: newNotes,
   } as Box;
 
