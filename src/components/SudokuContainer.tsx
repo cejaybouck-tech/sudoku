@@ -34,8 +34,14 @@ interface SelectContext {
   setSelected: Dispatch<SetStateAction<Coordinate>>;
 }
 
+interface MistakeContext {
+  mistakes: number;
+  setMistakes: Dispatch<SetStateAction<number>>;
+}
+
 export const Container = createContext<SudokuContext>({} as SudokuContext);
 export const Selected = createContext<SelectContext>({} as SelectContext);
+export const Mistake = createContext<MistakeContext>({} as MistakeContext);
 
 function SudokuContainer() {
   const [container, setContainer] = useState<Map<number, Map<number, Box>>>(
@@ -46,6 +52,7 @@ function SudokuContainer() {
     col: -1,
     answer: undefined,
   } as Coordinate);
+  const [mistakes, setMistakes] = useState<number>(0);
 
   const difficultyClickHandler = (e: React.MouseEvent) => {
     const difficultyOptions = new Map([
@@ -65,10 +72,12 @@ function SudokuContainer() {
     <section className="flex flex-col justify-center items-center w-full h-full">
       <Container.Provider value={{ container, setContainer }}>
         <Selected.Provider value={{ selected, setSelected }}>
-          {emptyRows.map((value, index) => (
-            <Row key={"rowkey-" + index + value} rowId={index} />
-          ))}
-          <AnswerSelector />
+          <Mistake.Provider value={{ mistakes, setMistakes }}>
+            {emptyRows.map((value, index) => (
+              <Row key={"rowkey-" + index + value} rowId={index} />
+            ))}
+            <AnswerSelector />
+          </Mistake.Provider>
         </Selected.Provider>
       </Container.Provider>
       <button
