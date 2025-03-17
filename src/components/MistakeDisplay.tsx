@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Container, Mistake } from "./SudokuContainer";
 
 function MistakeDisplay() {
-  const { mistakes, setMistakes } = useContext(Mistake);
-  const { container, setContainer } = useContext(Container);
+  const { mistakes } = useContext(Mistake);
+  const { container } = useContext(Container);
 
   const isWinner = () => {
     let count = 0;
