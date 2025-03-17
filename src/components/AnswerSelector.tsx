@@ -63,6 +63,19 @@ function AnswerSelector() {
     setContainer(buildWithNote(answer, setCoordinate, container));
   };
 
+  const isAllNumbersFound = (answer: number) => {
+    let count = 0;
+
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < 9; col++) {
+        const boxCheck = container.get(row)?.get(col);
+        if (boxCheck?.answer === answer && boxCheck.visible) count++;
+      }
+    }
+
+    return count >= 9;
+  };
+
   const box = container.get(selected.row)?.get(selected.col);
 
   return (
@@ -95,7 +108,7 @@ function AnswerSelector() {
             }
               ${isTakingNote ? "italic font-light" : ""}`}
           >
-            {number}
+            {isAllNumbersFound(number) ? "" : number}
           </button>
         ))}
       </div>
