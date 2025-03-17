@@ -1,5 +1,5 @@
 import { useContext, useState, MouseEvent } from "react";
-import { Container, Selected } from "./SudokuContainer";
+import { Container, Mistake, Selected } from "./SudokuContainer";
 import { isAvailable } from "../util/CheckNumber";
 import { buildWithAnswer, buildWithNote } from "../util/SetAnswer";
 
@@ -7,6 +7,7 @@ function AnswerSelector() {
   const [isTakingNote, setIsTakingNote] = useState<boolean>(false);
   const { selected, setSelected } = useContext(Selected);
   const { container, setContainer } = useContext(Container);
+  const { mistakes, setMistakes } = useContext(Mistake);
 
   const row = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -19,19 +20,22 @@ function AnswerSelector() {
   };
 
   const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
+    if (mistakes > 3) return;
+
     if (
       !selected.answer &&
       (selected.row < 0 || !selected.row) &&
       (selected.col < 0 || !selected.col)
     )
       return;
+
     const answer = Number(e.currentTarget.innerHTML);
 
     if (isTakingNote) {
       setNote(answer);
       return;
     }
-    console.log(selected.answer, selected.row, selected.col);
+
     setAnswer(answer);
   };
 
@@ -46,7 +50,8 @@ function AnswerSelector() {
     if (box?.visible) return;
 
     if (!isAvailable(answer, setCoordinate, container)) {
-      //set up mistake system
+      const newMistakes = mistakes + 1;
+      setMistakes(newMistakes);
       return;
     }
 

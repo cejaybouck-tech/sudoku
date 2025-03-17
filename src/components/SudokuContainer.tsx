@@ -11,6 +11,7 @@ import buildSudokuContainer, {
   buildEmptyContainer,
   Difficulty,
 } from "../util/BuildSudoku";
+import MistakeDisplay from "./MistakeDisplay";
 
 export interface Box {
   visible: boolean;
@@ -65,6 +66,7 @@ function SudokuContainer() {
     const difficulty = e.currentTarget.innerHTML.toLowerCase();
     setContainer(buildSudokuContainer(difficultyOptions.get(difficulty)));
     setSelected({} as Coordinate);
+    setMistakes(0);
   };
 
   const emptyRows = [0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -73,6 +75,7 @@ function SudokuContainer() {
       <Container.Provider value={{ container, setContainer }}>
         <Selected.Provider value={{ selected, setSelected }}>
           <Mistake.Provider value={{ mistakes, setMistakes }}>
+            <MistakeDisplay />
             {emptyRows.map((value, index) => (
               <Row key={"rowkey-" + index + value} rowId={index} />
             ))}

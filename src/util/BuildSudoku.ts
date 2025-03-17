@@ -30,7 +30,7 @@ function setDifficulty(
   difficulty: Difficulty
 ) {
   let numbersLeft = difficulty.totalHidden;
-  console.log("setting difficulty: ", difficulty);
+
   //removeMissingNumbers();
   while (numbersLeft >= 0) {
     for (let row = 0; row < 9; row++) {
@@ -48,7 +48,6 @@ function setDifficulty(
         }
       }
     }
-    console.log("options left:", numbersLeft);
   }
 }
 
