@@ -157,7 +157,7 @@ function secureFinalOptions(container: Map<number, Map<number, Box>>) {
   }
 }
 
-export function buildEmptyContainer() {
+export function buildEmptyContainer(addNotes: boolean = true) {
   const emptyContainer = new Map();
 
   for (let row = 0; row < 9; row++) {
@@ -166,7 +166,7 @@ export function buildEmptyContainer() {
       emptyContainer.get(row).set(col, {
         answer: undefined,
         visible: true,
-        notes: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        notes: addNotes ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : [],
       } as Box);
     }
   }

@@ -39,7 +39,7 @@ export const Selected = createContext<SelectContext>({} as SelectContext);
 
 function SudokuContainer() {
   const [container, setContainer] = useState<Map<number, Map<number, Box>>>(
-    buildEmptyContainer()
+    buildEmptyContainer(false)
   );
   const [selected, setSelected] = useState<Coordinate>({
     row: -1,
