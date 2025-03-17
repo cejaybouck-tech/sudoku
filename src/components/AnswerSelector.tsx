@@ -19,14 +19,19 @@ function AnswerSelector() {
   };
 
   const handleSelect = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!selected.answer && selected.row < 0 && selected.col < 0) return;
+    if (
+      !selected.answer &&
+      (selected.row < 0 || !selected.row) &&
+      (selected.col < 0 || !selected.col)
+    )
+      return;
     const answer = Number(e.currentTarget.innerHTML);
 
     if (isTakingNote) {
       setNote(answer);
       return;
     }
-
+    console.log(selected.answer, selected.row, selected.col);
     setAnswer(answer);
   };
 
