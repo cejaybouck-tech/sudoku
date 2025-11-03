@@ -3,7 +3,7 @@ import SudokuContainer from "./components/SudokuContainer";
 
 function App() {
   return (
-    <main className="h-screen w-full">
+    <main className="h-dvh w-full">
       <SudokuContainer />
     </main>
   );
