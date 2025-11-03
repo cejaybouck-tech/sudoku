@@ -113,7 +113,7 @@ function AnswerSelector() {
           <button
             key={"answer-" + number}
             onClick={handleSelect}
-            className={`w-[50px] h-[50px] border  mt-2 mr-1 flex justify-center items-center transition duration-300 hover:-translate-y-2 ${
+            className={`w-[40px] h-[40px] border  mt-2 mr-1 flex justify-center items-center transition duration-300 hover:-translate-y-2 ${
               box?.notes.includes(number) ? "border-green-400" : ""
             }
               ${isTakingNote ? "italic font-light" : ""}`}
