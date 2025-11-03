@@ -27,7 +27,7 @@ function DisplayBox({
   return (
     <div
       onClick={onSelect}
-      className={`flex items-center justify-center w-[50px] h-[50px] text-3xl text-center border-b border-gray-500 border-r select-none hover:bg-green-300
+      className={`flex items-center justify-center w-[45px] h-[45px] text-3xl text-center border-b border-gray-500 border-r select-none hover:bg-green-300
         ${(row + 1) % 3 === 0 && row < 6 ? "border-b-4 border-b-black" : ""}
         ${(col + 1) % 3 === 0 && col < 6 ? "border-r-4 border-r-black" : ""}
         ${col === 0 ? "border-l" : ""} 
